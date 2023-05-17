@@ -50,7 +50,7 @@ spring:
         registration:
           github:
             client-id: ${GITHUB_CLIENT_ID}
-            client-secret: ${0f97031ce6178b7dfb67a6af587f37e222a16120}
+            client-secret: ${GITHUB_CLIENT_SECRET}
             scope: ${GITHUB_SCOPE}
           google:
             client-id: ${GOOGLE_CLIENT_ID}
