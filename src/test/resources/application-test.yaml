@@ -21,6 +21,3 @@ spring:
     driverClassName: org.h2.Driver
     hikari:
       jdbc-url: jdbc:h2:mem:jira;NON_KEYWORDS=KEY,VALUE,PASSWORD
-
-  liquibase:
-    changeLog: "classpath:db/test.sql"
