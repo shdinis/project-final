@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  jira:
+    container_name: jirarush
+    env_file:
+      - config/jirarush-app-prop.env
+    image: project-final
+    build: .
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    container_name: jira-db
+    image: postgres
+    environment:
+      POSTGRES_USER: jira
+      POSTGRES_PASSWORD: JiraRush
+      POSTGRES_DB: jira
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data-den
+    networks:
+      - app-network
+
+  nginx:
+    container_name: nginx-jira
+    image: nginx:1.13
+    restart: always
+
+    ports:
+      - 80:80
+    volumes:
+      - ./config/none/:/etc/nginx/conf.d
+      - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./resources/static:/opt/jirarush/resources/static:ro
+    depends_on:
+      - jira
+    networks:
+      - jirarush-network
+      - app-network
+
+networks:
+  jirarush-network:
+    name: jirarush-network
+    driver: bridge
+  app-network:
+    name: app-network
+    driver: bridge
